@@ -1,6 +1,6 @@
 /*
- *  tabellajs - v0.4.1
- *  2019-05-02
+ *  tabellajs - v0.5.1
+ *  2020-02-10
  *
  *  https://github.com/iliketomatoes/tabellajs
  */
@@ -547,8 +547,8 @@ var Toucher = {
 			var tableHeader = options.tableHeader,
 				docfrag = document.createDocumentFragment(),
 				tRow,
-							tRowDesc,
-							tEl;
+                tRowDesc,
+                tEl;
 
 			try {
 
@@ -607,7 +607,6 @@ var Toucher = {
 						tEl = createHTMLEl('div', 't-element', tRowCell, tableHeaderCellHTML);
 
 						tSlidingRow.appendChild(tRowCell);
-
 					}
 
 					el.appendChild(docfrag);
@@ -628,6 +627,7 @@ var Toucher = {
 		},
 
 		setUpRows: function(el, options) {
+            // console.log(options);
 
 			var tableHeader = options.tableHeader,
 				rows = options.rows,
@@ -641,8 +641,7 @@ var Toucher = {
 			if (numberOfRows > 0) {
 
 				for (var i = 0; i < numberOfRows; i++) {
-
-					var tRow = createHTMLEl('div', 't-row', docfrag);
+					var tRow = createHTMLEl('div', 't-row', docfrag); //создали строку общую
 
 					if (!!rows[i].rowHeader) {
 						tHeader = createHTMLEl('section', 't-row-header', tRow, rows[i].rowHeader);
@@ -652,12 +651,13 @@ var Toucher = {
 
 						for (var j = 0; j < rows[i].rowVal.length; j++) {
 
-							var tRowContentWrapper = createHTMLEl('div', 't-row-content-wrapper', tRow);
+                            // создали строку таблицы
+                            var tRowContentWrapper = createHTMLEl('div', 't-row-content-wrapper', tRow);
 
 							var tRowContent = createHTMLEl('div', 't-row-content', tRowContentWrapper);
 
 							var tRowDescHTML = '<div class="t-element">';
-							tRowDescHTML += '<div class="t-cell-desc-l">';
+                            tRowDescHTML += '<div class="t-cell-desc-l">';
 							tRowDescHTML += (typeof rows[i].rowDesc !== 'undefined' && !!rows[i].rowDesc[j]) ? rows[i].rowDesc[j] : '';
 							tRowDescHTML += '</div>';
 							tRowDescHTML += '</div>';
@@ -667,16 +667,14 @@ var Toucher = {
 
 							tRowDesc = createHTMLEl('div', descClass, tRowContent, tRowDescHTML);
 
-
 							var tRowValues = createHTMLEl('div', 't-row-values', tRowContent);
 
 							var tSlidingRow = createHTMLEl('div', 't-sliding-row', tRowValues);
 
 							for (var k = 0; k < tableHeader.length; k++) {
-
 								var tRowCell = document.createElement('div');
-
 								var cellClass = 't-row-cell';
+
 								if (j >= 1) cellClass += ' t-cell-border-top';
 
 								tRowCell.className = cellClass;
@@ -696,15 +694,17 @@ var Toucher = {
 								//Item current value
 								cellHTML += '<div class="t-cell-value">';
 
-								if (typeof rows[i].rowVal[j][k] !== 'undefined') {
+								if(rows[i].rowVal[j][k] === false) {
+									cellHTML += '';
+								} else if(rows[i].rowVal[j][k] === true) {
+									cellHTML += '<img style="width: 15px;user-select: none; pointer-events: none;" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0OTIgNDkyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0OTIgNDkyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMzAwLjE4OCwyNDZMNDg0LjE0LDYyLjA0YzUuMDYtNS4wNjQsNy44NTItMTEuODIsNy44Ni0xOS4wMjRjMC03LjIwOC0yLjc5Mi0xMy45NzItNy44Ni0xOS4wMjhMNDY4LjAyLDcuODcyICAgIGMtNS4wNjgtNS4wNzYtMTEuODI0LTcuODU2LTE5LjAzNi03Ljg1NmMtNy4yLDAtMTMuOTU2LDIuNzgtMTkuMDI0LDcuODU2TDI0Ni4wMDgsMTkxLjgyTDYyLjA0OCw3Ljg3MiAgICBjLTUuMDYtNS4wNzYtMTEuODItNy44NTYtMTkuMDI4LTcuODU2Yy03LjIsMC0xMy45NiwyLjc4LTE5LjAyLDcuODU2TDcuODcyLDIzLjk4OGMtMTAuNDk2LDEwLjQ5Ni0xMC40OTYsMjcuNTY4LDAsMzguMDUyICAgIEwxOTEuODI4LDI0Nkw3Ljg3Miw0MjkuOTUyYy01LjA2NCw1LjA3Mi03Ljg1MiwxMS44MjgtNy44NTIsMTkuMDMyYzAsNy4yMDQsMi43ODgsMTMuOTYsNy44NTIsMTkuMDI4bDE2LjEyNCwxNi4xMTYgICAgYzUuMDYsNS4wNzIsMTEuODI0LDcuODU2LDE5LjAyLDcuODU2YzcuMjA4LDAsMTMuOTY4LTIuNzg0LDE5LjAyOC03Ljg1NmwxODMuOTYtMTgzLjk1MmwxODMuOTUyLDE4My45NTIgICAgYzUuMDY4LDUuMDcyLDExLjgyNCw3Ljg1NiwxOS4wMjQsNy44NTZoMC4wMDhjNy4yMDQsMCwxMy45Ni0yLjc4NCwxOS4wMjgtNy44NTZsMTYuMTItMTYuMTE2ICAgIGM1LjA2LTUuMDY0LDcuODUyLTExLjgyNCw3Ljg1Mi0xOS4wMjhjMC03LjIwNC0yLjc5Mi0xMy45Ni03Ljg1Mi0xOS4wMjhMMzAwLjE4OCwyNDZ6IiBmaWxsPSIjMDAwMDAwIi8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" />';
+								} else if (typeof rows[i].rowVal[j][k] !== 'undefined') {
+                                    cellHTML += rows[i].rowVal[j][k];
 
-									cellHTML += rows[i].rowVal[j][k];
-
-									//If it's a number we add the currency
+									// If it's a number we add the currency
 									if (!isNaN(rows[i].rowVal[j][k])) {
 										cellHTML += ' ' + options.currency;
 									}
-
 								} else {
 									cellHTML += options.emptyCell;
 								}

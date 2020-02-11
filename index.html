@@ -84,7 +84,10 @@
 
         var tabellaCtr = document.getElementById('tabella');
 
-        var data = {};
+        var data = {
+            currency: '',
+            emptyCell: '',
+        };
 
         data.tableHeader = [
             ['2014-12-14', '2014-12-20'],
@@ -98,20 +101,20 @@
         data.rows = [{
             rowHeader: '<h2 class="table-h"><a href="#">Single bed room</a></h2>',
             rowVal: [
-                [190, 210, 210, 204, 180, 160]
+                [true, true, '', true, 180, 160]
             ],
             rowDesc: ['1 person B&B']
         }, {
             rowHeader: '<h2 class="table-h"><a href="#">Double bed room</a></h2>',
             rowVal: [
-                [190, 210, 210, 204, 180, 160],
-                [190, 210, 210, 204, 180, 140]
+                [190, true, 210, 204, 180, 160],
+                [true, 210, 210, 204, 180, 140]
             ],
             rowDesc: ['1 person half board', '2 people half board']
         }, {
             rowHeader: '<h2 class="table-h"><a href="#">Suite</a></h2>',
             rowVal: [
-                [250, 280, 280, 260, 230, 210]
+                [250, true, 280, 260, 230, 210]
             ],
             rowDesc: ['2 people all inclusive']
         }];
